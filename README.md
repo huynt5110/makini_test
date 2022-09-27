@@ -4,5 +4,5 @@ c. Service planner - display list of dates when services can be done based on sc
 
 ## Sorry requirement c i didn't understand, but don't know who i should ask.
 
-### I applied react-query for caching
+### Can applied react-query for caching request
 [https://tanstack.com/query/v4/docs/installation]

@@ -1,11 +1,11 @@
 export interface DrawingsResponse {
-  offset?: string;
+  offset?: string
   records: {
-    id: string;
-    createdTime: string;
+    id: string
+    createdTime: string
     fields: {
-      name: string;
-      model_model?: string[];
+      name: string
+      model_model?: string[]
     };
   }[];
 }
