@@ -1,51 +1,8 @@
 import { useState, useEffect } from 'react';
 
 import { fetchModels } from '../api/models';
-import { fetchModelModel } from '../api/model_model';
-
-interface ModelResponse {
-  offset?: string;
-  records: {
-    id: string;
-    createdTime: string;
-    fields: {
-      parents?: string[];
-      children?: string[];
-    };
-  }[];
-}
-
-const generateQuery = (ids): string => {
-  const idsLength = ids.length;
-  let query = 'OR(';
-  ids.forEach((id, index) => {
-    query += `RECORD_ID()='${id}'`;
-    if (index + 1 < idsLength) query += ', ';
-  });
-  query += ')';
-  return query;
-};
-
-const SubView = (props) => {
-  const ids: string[] = props.ids;
-  const [subModels, setSubModels] = useState([]);
-
-  useEffect(() => {
-    (async () => {
-      const query = generateQuery(ids);
-      const result = await fetchModelModel({ filterByFormula: query });
-      setSubModels(result);
-    })();
-  }, [ids, fetchModelModel]);
-
-  return (
-    <>
-      {subModels.map((item) => (
-        <li>{item.fields.id}</li>
-      ))}
-    </>
-  );
-};
+import { ModelResponse } from '../../models/model';
+import SubView from './sub_view';
 
 export default function HierarchyView() {
   const [models, setModels] = useState({} as ModelResponse);
@@ -68,9 +25,10 @@ export default function HierarchyView() {
         {(models.records ?? []).map((record) => {
           const {
             fields: { parents, children },
+            id,
           } = record;
           return (
-            <div>
+            <div key={id}>
               <li>{record.id}</li>
               {parents && (
                 <ul>
